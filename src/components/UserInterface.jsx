@@ -1,6 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react';
+import axios from 'axios'
 import { MapPinIcon, MagnifyingGlassIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 const UserInterface = () => {
+
+  
+  const [city, setCity] = useState('');
+
+
+
+  
+const fetchDatas = async () => {
+      try {
+        let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${import.meta.env.VITE_WEATHER_KEY}`);
+        // setDatas(response.data);
+        console.log(response);
+        
+      } catch (error) {
+        console.error('error fetching weather data:', error);
+      }
+
+    }
+
+
+
+
+
   return (
     <div>
       <nav className='flex justify-between bg-gray-50 border-y-2 border-gray-100'>
@@ -25,7 +50,7 @@ const UserInterface = () => {
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <MapPinIcon className="h-5 w-5 text-gray-500" />
             </div>
-            <input
+            <input onChange={(e) => setCity(e.target.value)}
               type="text"
               placeholder="Enter your location"
               className="bg-white w-full pl-10 pr-4 py-3 text-lg border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -33,7 +58,7 @@ const UserInterface = () => {
           </div>
 
           {/* Search Button */}
-          <button className="bg-blue-600 px-5 text-white w-15 rounded hover:bg-blue-500 transition cursor-pointer">
+          <button onClick={fetchDatas} className="bg-blue-600 px-5 text-white w-15 rounded hover:bg-blue-500 transition cursor-pointer">
             <MagnifyingGlassIcon className="h-5 w-5" />
           </button>
 
@@ -83,13 +108,13 @@ const UserInterface = () => {
             </div>
 
             <div className='p-5 bg-gray-50 rounded border border-gray-100'>
-             <p className='text-center text-sm text-gray-500'>Visibility</p>
+              <p className='text-center text-sm text-gray-500'>Visibility</p>
               <h1 className='text-center font-bold text-lg'>14 km</h1>
               <p className='text-center text-sm text-gray-500'>Excellent</p>
             </div>
 
             <div className='p-5 bg-gray-50 rounded border border-gray-100'>
-             <p className='text-center text-sm text-gray-500'>UV index</p>
+              <p className='text-center text-sm text-gray-500'>UV index</p>
               <h1 className='text-center font-bold text-lg'>6</h1>
               <p className='text-center text-sm text-gray-500'>High</p>
             </div>
@@ -101,13 +126,13 @@ const UserInterface = () => {
             </div>
 
             <div className='p-5 bg-gray-50 rounded border border-gray-100'>
-             <p className='text-center text-sm text-gray-500'>Sunset</p>
+              <p className='text-center text-sm text-gray-500'>Sunset</p>
               <h1 className='text-center font-bold text-lg'>18:45</h1>
               <p className='text-center text-sm text-gray-500'>PM</p>
             </div>
 
             <div className='p-5 bg-gray-50 rounded border border-gray-100'>
-             <p className='text-center text-sm text-gray-500'>Wind Direction</p>
+              <p className='text-center text-sm text-gray-500'>Wind Direction</p>
               <h1 className='text-center font-bold text-lg'>SW</h1>
               <p className='text-center text-sm text-gray-500'>11 km/h</p>
             </div>
@@ -132,21 +157,22 @@ const UserInterface = () => {
         </div>
       </section>
 
-       <footer className="bg-gray-100 text-gray-500 py-8 mt-10">
-      <div className="max-w-4xl mx-auto flex justify-center items-center gap-8 text-center">
-        <p className="text-sm">🌍 Global Coverage</p>
-        <p className="text-sm">⚡ Real-time Updates</p>
-        <p className="text-sm">📊 Detailed Analytics</p>
-        <p className="text-sm">🎯 Accurate Forecasts</p> 
-       
-      </div>
-      <div>
-         <p className=" mt-4 text-center">Professional weather monitoring for informed decisions</p>
-      </div>
-    </footer>
+      <footer className="bg-gray-100 text-gray-500 py-8 mt-10">
+        <div className="max-w-4xl mx-auto flex justify-center items-center gap-8 text-center">
+          <p className="text-sm">🌍 Global Coverage</p>
+          <p className="text-sm">⚡ Real-time Updates</p>
+          <p className="text-sm">📊 Detailed Analytics</p>
+          <p className="text-sm">🎯 Accurate Forecasts</p>
+
+        </div>
+        <div>
+          <p className=" mt-4 text-center">Professional weather monitoring for informed decisions</p>
+        </div>
+      </footer>
 
     </div>
   )
 }
 
 export default UserInterface
+
